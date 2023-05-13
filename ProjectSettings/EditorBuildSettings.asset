@@ -53,5 +53,9 @@ EditorBuildSettings:
       type: 2}
     UnityEditor.XR.ARKit.ARKitSettings: {fileID: 11400000, guid: bafe0f783c9bc954290fa43cd651413b,
       type: 2}
+    com.unity.xr.magicleap.magic_leap_settings: {fileID: 11400000, guid: dfcdfd7b3e4272c46bf5ba3700761904,
+      type: 2}
+    com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 332c195f4d819684987f84e2d68fe8ae,
+      type: 2}
     com.unity.xr.openxr.settings4: {fileID: 11400000, guid: 978cd3526389ad24082e7742c0595ca3,
       type: 2}

@@ -277,7 +277,7 @@
     },
     "com.unity.xr.arcore": {
       "version": "4.2.7",
-      "depth": 1,
+      "depth": 0,
       "source": "registry",
       "dependencies": {
         "com.unity.xr.arsubsystems": "4.2.7",
