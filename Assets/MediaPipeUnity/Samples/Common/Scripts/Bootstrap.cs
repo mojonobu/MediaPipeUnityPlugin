@@ -124,6 +124,10 @@ namespace Mediapipe.Unity
           {
             return GetComponent<VideoSource>();
           }
+        case ImageSourceType.ARCamera:
+          {
+            return GetComponent<ARCameraSource>();
+          }
         case ImageSourceType.Unknown:
         default:
           {
