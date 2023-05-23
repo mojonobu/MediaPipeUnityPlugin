@@ -106,7 +106,11 @@ public class ARCameraSource : ImageSource
   }
 
   public override IEnumerator Play()
-  {
+  {   
+    if(_arCameraManager== null)
+    {
+      InitializeARScene();
+    }
     //OnFrameReceivedなど？
     _arCameraManager.frameReceived += OnCameraFrameReceived;
 
@@ -134,6 +138,14 @@ public class ARCameraSource : ImageSource
     }
 
     yield return null;
+  }
+
+  private void InitializeARScene()
+  {
+    // AR Session Originがなければ生成する
+    // AR Sessionがなければ生成する
+    // arCameraManagerを設定する
+    // DoNotDestroy設定？
   }
 
   public override IEnumerator Resume()
