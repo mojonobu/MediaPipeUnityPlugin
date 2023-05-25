@@ -12,6 +12,12 @@ using UnityEngine.XR.ARSubsystems;
 
 public class ARCameraSource : ImageSource
 {
+
+  private GameObject _arSessionObject;
+  private GameObject _arSessionOriginObject;
+  private GameObject _arCameraObject;
+
+
   [SerializeField] private ARCameraManager _arCameraManager;
   private Texture2D _arCameraRawTexture;
   XRCpuImage.Transformation m_Transformation = XRCpuImage.Transformation.MirrorY;
@@ -102,7 +108,8 @@ public class ARCameraSource : ImageSource
 
   public override void Pause()
   {
-    throw new System.NotImplementedException();
+    _arSessionObject.SetActive(false);
+    _arSessionOriginObject.SetActive(false);
   }
 
   public override IEnumerator Play()
@@ -142,10 +149,38 @@ public class ARCameraSource : ImageSource
 
   private void InitializeARScene()
   {
-    // AR Session Originがなければ生成する
-    // AR Sessionがなければ生成する
-    // arCameraManagerを設定する
-    // DoNotDestroy設定？
+    _arSessionObject = new GameObject("ARSession");
+    _arSessionOriginObject = new GameObject("ARSessionOrigin");
+    _arCameraObject = new GameObject("AR Camera");
+
+    _ = _arSessionObject.AddComponent<ARSession>();
+    _ = _arSessionOriginObject.AddComponent<ARSessionOrigin>();
+    _ = _arCameraObject.AddComponent<Camera>();
+    _arCameraObject.transform.SetParent(_arSessionOriginObject.transform);
+
+    // ARCameraManagerとARPoseDriverを追加
+    _ = _arCameraObject.AddComponent<ARCameraManager>();
+    _ = _arCameraObject.AddComponent<ARPoseDriver>();
+
+    // ARInputManagerを追加
+    _ = _arSessionObject.AddComponent<ARInputManager>();
+
+    // ARCameraBackgroundを追加
+    _ = _arCameraObject.AddComponent<ARCameraBackground>();
+
+    _arSessionObject.SetActive(false);
+    _arSessionOriginObject.SetActive(false);
+  }
+  public void StartAR()
+  {
+    _ = StartCoroutine(ActivateAfterOneFrame());
+  }
+  private IEnumerator ActivateAfterOneFrame()
+  {
+    yield return new WaitForEndOfFrame();
+
+    _arSessionObject.SetActive(true);
+    _arSessionOriginObject.SetActive(true);
   }
 
   public override IEnumerator Resume()
@@ -161,6 +196,8 @@ public class ARCameraSource : ImageSource
 
   public override void Stop()
   {
+    _arSessionObject.SetActive(false);
+    _arSessionOriginObject.SetActive(false);
   }
 
 }
